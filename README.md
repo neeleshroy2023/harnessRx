@@ -1,5 +1,14 @@
 # harnessRx
 
+[![Eval](https://github.com/neeleshroy2023/harnessRx/actions/workflows/eval.yml/badge.svg)](https://github.com/neeleshroy2023/harnessRx/actions/workflows/eval.yml)
+[![Python 3.11+](https://img.shields.io/badge/python-3.11+-blue.svg)](https://www.python.org/downloads/)
+[![uv](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/astral-sh/uv/main/assets/badge/v0.json)](https://github.com/astral-sh/uv)
+[![Ruff](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/astral-sh/ruff/main/assets/badge/v2.json)](https://github.com/astral-sh/ruff)
+[![FastAPI](https://img.shields.io/badge/FastAPI-009688?logo=fastapi&logoColor=white)](https://fastapi.tiangolo.com/)
+[![React](https://img.shields.io/badge/React-61DAFB?logo=react&logoColor=black)](https://react.dev/)
+[![Claude](https://img.shields.io/badge/Claude-Sonnet%204.6%20%2B%20Haiku%204.5-D97757)](https://www.anthropic.com/claude)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+
 **Eval + guardrails harness for production Claude LLM features.**
 
 Four features (summarization, classification/routing, RAG Q&A, structured extraction) wrapped with four guardrails (PII, prompt injection, schema validation, toxicity), scored with a hybrid of deterministic heuristics and Claude-as-judge, and gated in CI against a committed baseline.
