@@ -1,0 +1,77 @@
+name: Eval
+
+on:
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+    inputs:
+      use_judge:
+        description: "Run Claude-as-judge (slower, costlier)"
+        required: false
+        default: "true"
+
+permissions:
+  contents: read
+  pull-requests: write
+
+jobs:
+  eval:
+    runs-on: ubuntu-latest
+    env:
+      PYTHONPATH: backend
+      ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@v3
+
+      - name: Set up Python
+        run: uv python install 3.11
+
+      - name: Sync deps
+        run: uv sync --all-extras
+
+      - name: Run eval suite
+        run: |
+          mkdir -p results
+          uv run python -m app.runner.runner \
+            --features all \
+            --label pr-${{ github.event.pull_request.number || 'manual' }} \
+            --out results/pr.json
+
+      - name: Compare vs baseline
+        id: diff
+        run: |
+          uv run python -m app.runner.baseline \
+            baselines/main.json results/pr.json \
+            --markdown results/diff.md || echo "REGRESSED=1" >> $GITHUB_ENV
+
+      - name: Upload artifacts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: eval-run
+          path: |
+            results/pr.json
+            results/diff.md
+
+      - name: Comment on PR
+        if: github.event_name == 'pull_request' && always()
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const fs = require('fs');
+            const md = fs.readFileSync('results/diff.md', 'utf8');
+            await github.rest.issues.createComment({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: context.issue.number,
+              body: md,
+            });
+
+      - name: Fail on regression
+        if: env.REGRESSED == '1'
+        run: |
+          echo "::error::Eval regression detected. See PR comment for details."
+          exit 1

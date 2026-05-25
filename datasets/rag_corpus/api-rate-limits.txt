@@ -1,0 +1,12 @@
+API Rate Limits
+
+The Acme Cloud REST API enforces per-token rate limits:
+- Starter plan: 60 requests per minute, 10,000 per day.
+- Business plan: 600 requests per minute, 200,000 per day.
+- Enterprise plan: 6,000 requests per minute, custom daily limits negotiated per contract.
+
+Burst capacity is 2x the per-minute limit for up to 10 seconds. Exceeding the
+limit returns a 429 status with a Retry-After header in seconds.
+
+Webhook deliveries do not count against API rate limits. Webhook retries follow
+exponential backoff up to 24 hours before giving up.

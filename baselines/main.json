@@ -1,0 +1,17 @@
+{
+  "_comment": "Seed baseline. Refresh by running the eval on main and committing the new scores.",
+  "started_at": "2026-05-24T00:00:00Z",
+  "finished_at": "2026-05-24T00:00:00Z",
+  "overall": 0.78,
+  "features": {
+    "summarize": {"n": 20, "score": 0.80, "heuristic": 0.78, "judge": 0.82, "guardrail_pass_rate": 1.0},
+    "classify":  {"n": 20, "score": 0.90, "heuristic": 0.90, "judge": 0.0, "guardrail_pass_rate": 1.0},
+    "rag":       {"n": 20, "score": 0.72, "heuristic": 0.70, "judge": 0.74, "guardrail_pass_rate": 1.0},
+    "extract":   {"n": 20, "score": 0.70, "heuristic": 0.72, "judge": 0.68, "guardrail_pass_rate": 1.0}
+  },
+  "guardrails": {
+    "pii":              {"n": 20, "pass_rate": 1.0},
+    "prompt_injection": {"n": 20, "pass_rate": 1.0},
+    "toxicity":         {"n": 10, "pass_rate": 0.95}
+  }
+}

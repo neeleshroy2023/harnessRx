@@ -1,0 +1,122 @@
+# RAG cases. Corpus: datasets/rag_corpus/*.txt (doc_id = filename stem).
+# Includes a "don't know" case to test refusal behavior.
+- id: rag-001
+  input: {question: "How long is the refund window for a monthly plan?"}
+  expected:
+    answer: "14 days"
+    citations: [refund-policy]
+    judge_rubric: "Answer states 14 days for monthly plans. Cites refund-policy."
+- id: rag-002
+  input: {question: "Does the Starter plan include SSO?"}
+  expected:
+    answer: "no, SSO not on Starter"
+    citations: [sso-setup]
+    judge_rubric: "Answer says Starter does not include SSO. Cites sso-setup."
+- id: rag-003
+  input: {question: "What SSO standards are supported?"}
+  expected:
+    answer: "SAML 2.0 and OIDC"
+    citations: [sso-setup]
+    judge_rubric: "Mentions both SAML 2.0 and OIDC. Cites sso-setup."
+- id: rag-004
+  input: {question: "How long are audit logs retained on Enterprise?"}
+  expected:
+    answer: "24 months"
+    citations: [data-retention]
+    judge_rubric: "Answer says 24 months on Enterprise. Cites data-retention."
+- id: rag-005
+  input: {question: "What's the API rate limit on the Business plan per minute?"}
+  expected:
+    answer: "600 requests per minute"
+    citations: [api-rate-limits]
+    judge_rubric: "Answer says 600 rpm on Business. Cites api-rate-limits."
+- id: rag-006
+  input: {question: "What status code is returned when I exceed the rate limit?"}
+  expected:
+    answer: "429"
+    citations: [api-rate-limits]
+    judge_rubric: "Answer mentions 429. Cites api-rate-limits."
+- id: rag-007
+  input: {question: "How do I request data deletion under right-to-be-forgotten?"}
+  expected:
+    answer: "email privacy@acme.cloud, completed within 30 days"
+    citations: [data-retention]
+    judge_rubric: "Mentions the email address and 30-day window. Cites data-retention."
+- id: rag-008
+  input: {question: "Where do I upload IdP metadata for SAML setup?"}
+  expected:
+    answer: "Settings > Security > SSO"
+    citations: [sso-setup]
+    judge_rubric: "Points to Settings > Security > SSO. Cites sso-setup."
+- id: rag-009
+  input: {question: "Are refunds available for enterprise contracts?"}
+  expected:
+    answer: "yes with CSM approval, 30 business days"
+    citations: [refund-policy]
+    judge_rubric: "Mentions CSM approval and 30 business day processing. Cites refund-policy."
+- id: rag-010
+  input: {question: "How long is the grace period after cancellation?"}
+  expected:
+    answer: "30 days"
+    citations: [data-retention]
+    judge_rubric: "Answer says 30-day grace period. Cites data-retention."
+- id: rag-011
+  input: {question: "What's the burst capacity for the API?"}
+  expected:
+    answer: "2x for up to 10 seconds"
+    citations: [api-rate-limits]
+    judge_rubric: "Mentions 2x limit and 10 seconds. Cites api-rate-limits."
+- id: rag-012
+  input: {question: "Is SCIM available on the Business plan?"}
+  expected:
+    answer: "no, Enterprise only"
+    citations: [sso-setup]
+    judge_rubric: "States SCIM is Enterprise only. Cites sso-setup."
+- id: rag-013
+  input: {question: "How long until data is removed from backups after the grace period?"}
+  expected:
+    answer: "90 days"
+    citations: [data-retention]
+    judge_rubric: "Mentions 90 days for backups. Cites data-retention."
+- id: rag-014
+  input: {question: "What's the daily API limit on Starter?"}
+  expected:
+    answer: "10,000"
+    citations: [api-rate-limits]
+    judge_rubric: "Answer states 10,000 per day. Cites api-rate-limits."
+- id: rag-015
+  input: {question: "Can refunds be issued via bank wire if I paid by credit card?"}
+  expected:
+    answer: "no"
+    citations: [refund-policy]
+    judge_rubric: "States bank wire refunds not supported for credit card payments."
+- id: rag-016
+  input: {question: "What's the SSO support response time on Business?"}
+  expected:
+    answer: "4 business hours"
+    citations: [sso-setup]
+    judge_rubric: "Answer says 4 business hours on Business."
+- id: rag-017
+  input: {question: "What's the company's stock ticker?"}
+  expected:
+    answer: "I don't know."
+    citations: []
+    judge_rubric: "Answer must be 'I don't know' — info not in corpus."
+- id: rag-018
+  input: {question: "How long are webhook retries attempted before giving up?"}
+  expected:
+    answer: "24 hours"
+    citations: [api-rate-limits]
+    judge_rubric: "Mentions 24 hours backoff."
+- id: rag-019
+  input: {question: "What's the audit log retention on Business plan?"}
+  expected:
+    answer: "12 months"
+    citations: [data-retention]
+    judge_rubric: "Answer says 12 months on Business."
+- id: rag-020
+  input: {question: "Can customers delete their own audit logs?"}
+  expected:
+    answer: "no, audit logs are immutable"
+    citations: [data-retention]
+    judge_rubric: "States audit logs are immutable and cannot be deleted."

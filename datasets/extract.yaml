@@ -1,0 +1,396 @@
+# Structured-extraction cases. Each provides a JSON Schema + expected fields.
+- id: ext-001
+  input:
+    text: "Order #A-1029 placed by Jane Smith on 2026-02-14 for $129.99 (3 items)."
+    schema:
+      type: object
+      required: [order_id, customer, date, total, item_count]
+      properties:
+        order_id: {type: string}
+        customer: {type: string}
+        date: {type: string}
+        total: {type: number}
+        item_count: {type: integer}
+  expected:
+    schema:
+      type: object
+      required: [order_id, customer, date, total, item_count]
+      properties:
+        order_id: {type: string}
+        customer: {type: string}
+        date: {type: string}
+        total: {type: number}
+        item_count: {type: integer}
+    fields:
+      order_id: "A-1029"
+      customer: "Jane Smith"
+      date: "2026-02-14"
+      total: 129.99
+      item_count: 3
+    judge_rubric: "All five fields correct, types as in schema."
+
+- id: ext-002
+  input:
+    text: "Contact: Bob Lee, bob.lee@example.com, +1 (415) 555-9123, San Francisco, CA."
+    schema:
+      type: object
+      properties:
+        name: {type: string}
+        email: {type: string}
+        phone: {type: string}
+        city: {type: string}
+        state: {type: string}
+  expected:
+    schema:
+      type: object
+      properties:
+        name: {type: string}
+        email: {type: string}
+        phone: {type: string}
+        city: {type: string}
+        state: {type: string}
+    fields:
+      name: "Bob Lee"
+      email: "bob.lee@example.com"
+      city: "San Francisco"
+      state: "CA"
+    judge_rubric: "Name, email, city, state correct. Phone present in some normalized form."
+
+- id: ext-003
+  input:
+    text: "Flight UA-237 from SFO to LHR departs at 18:45 on 2026-03-12 and arrives 12:55 the next day. Duration: 10h10m."
+    schema:
+      type: object
+      properties:
+        flight_number: {type: string}
+        origin: {type: string}
+        destination: {type: string}
+        depart_time: {type: string}
+        arrive_time: {type: string}
+        depart_date: {type: string}
+  expected:
+    fields:
+      flight_number: "UA-237"
+      origin: "SFO"
+      destination: "LHR"
+      depart_time: "18:45"
+      arrive_time: "12:55"
+      depart_date: "2026-03-12"
+    judge_rubric: "All 6 fields exact."
+
+- id: ext-004
+  input:
+    text: "Recipe: Chocolate chip cookies. Yields 24 cookies. Bake at 350F for 12 minutes."
+    schema:
+      type: object
+      properties:
+        name: {type: string}
+        yield: {type: integer}
+        temperature_f: {type: integer}
+        bake_minutes: {type: integer}
+  expected:
+    fields:
+      name: "Chocolate chip cookies"
+      yield: 24
+      temperature_f: 350
+      bake_minutes: 12
+    judge_rubric: "All 4 fields correct, numbers as integers."
+
+- id: ext-005
+  input:
+    text: "Invoice #INV-2026-0042 from VendorCo, due 2026-04-30, amount $4,250.00, tax $340.00."
+    schema:
+      type: object
+      properties:
+        invoice_id: {type: string}
+        vendor: {type: string}
+        due_date: {type: string}
+        amount: {type: number}
+        tax: {type: number}
+  expected:
+    fields:
+      invoice_id: "INV-2026-0042"
+      vendor: "VendorCo"
+      due_date: "2026-04-30"
+      amount: 4250.00
+      tax: 340.00
+
+- id: ext-006
+  input:
+    text: "Meeting: Q1 planning, Tuesday March 3 from 10am to 11:30am, conference room Aurora, 12 attendees."
+    schema:
+      type: object
+      properties:
+        title: {type: string}
+        day: {type: string}
+        date: {type: string}
+        start: {type: string}
+        end: {type: string}
+        location: {type: string}
+        attendees: {type: integer}
+  expected:
+    fields:
+      title: "Q1 planning"
+      day: "Tuesday"
+      location: "Aurora"
+      attendees: 12
+
+- id: ext-007
+  input:
+    text: "Pizza order: 2 large pepperoni, 1 medium veggie, total $48.75. Delivery to 742 Evergreen Terrace."
+    schema:
+      type: object
+      properties:
+        items: {type: array, items: {type: string}}
+        total: {type: number}
+        delivery_address: {type: string}
+  expected:
+    fields:
+      total: 48.75
+      delivery_address: "742 Evergreen Terrace"
+
+- id: ext-008
+  input:
+    text: "Patient ID 9912, Sarah Johnson, DOB 1985-07-22, blood type O+, allergies: penicillin, latex."
+    schema:
+      type: object
+      properties:
+        patient_id: {type: string}
+        name: {type: string}
+        dob: {type: string}
+        blood_type: {type: string}
+        allergies: {type: array, items: {type: string}}
+  expected:
+    fields:
+      patient_id: "9912"
+      name: "Sarah Johnson"
+      dob: "1985-07-22"
+      blood_type: "O+"
+      allergies: ["penicillin", "latex"]
+
+- id: ext-009
+  input:
+    text: "Job posting: Senior Backend Engineer, remote (US), salary $180,000-$220,000, requires Go and Kubernetes."
+    schema:
+      type: object
+      properties:
+        title: {type: string}
+        location: {type: string}
+        salary_min: {type: number}
+        salary_max: {type: number}
+        skills: {type: array, items: {type: string}}
+  expected:
+    fields:
+      title: "Senior Backend Engineer"
+      salary_min: 180000
+      salary_max: 220000
+
+- id: ext-010
+  input:
+    text: "Book: 'The Pragmatic Programmer' by Andrew Hunt and David Thomas, 2nd ed., published 2019, 352 pages."
+    schema:
+      type: object
+      properties:
+        title: {type: string}
+        authors: {type: array, items: {type: string}}
+        edition: {type: integer}
+        year: {type: integer}
+        pages: {type: integer}
+  expected:
+    fields:
+      title: "The Pragmatic Programmer"
+      authors: ["Andrew Hunt", "David Thomas"]
+      edition: 2
+      year: 2019
+      pages: 352
+
+- id: ext-011
+  input:
+    text: "Car: 2024 Toyota Camry SE, VIN 4T1G11AK1RU123456, 18,250 miles, $24,500."
+    schema:
+      type: object
+      properties:
+        year: {type: integer}
+        make: {type: string}
+        model: {type: string}
+        trim: {type: string}
+        vin: {type: string}
+        mileage: {type: integer}
+        price: {type: number}
+  expected:
+    fields:
+      year: 2024
+      make: "Toyota"
+      model: "Camry"
+      trim: "SE"
+      vin: "4T1G11AK1RU123456"
+      mileage: 18250
+      price: 24500
+
+- id: ext-012
+  input:
+    text: "Event: PyCon 2026, May 14-17, Pittsburgh PA, expected attendance 3,500."
+    schema:
+      type: object
+      properties:
+        name: {type: string}
+        start_date: {type: string}
+        end_date: {type: string}
+        city: {type: string}
+        state: {type: string}
+        attendance: {type: integer}
+  expected:
+    fields:
+      name: "PyCon 2026"
+      city: "Pittsburgh"
+      state: "PA"
+      attendance: 3500
+
+- id: ext-013
+  input:
+    text: "Course CS-101 Intro to Computer Science, 3 credits, MWF 10:00-10:50, Prof. Alan Turing."
+    schema:
+      type: object
+      properties:
+        code: {type: string}
+        title: {type: string}
+        credits: {type: integer}
+        instructor: {type: string}
+  expected:
+    fields:
+      code: "CS-101"
+      title: "Intro to Computer Science"
+      credits: 3
+      instructor: "Alan Turing"
+
+- id: ext-014
+  input:
+    text: "Property: 3BR 2BA single-family home, 1,820 sqft, listed at $649,000, MLS #ML-998877."
+    schema:
+      type: object
+      properties:
+        bedrooms: {type: integer}
+        bathrooms: {type: number}
+        sqft: {type: integer}
+        price: {type: number}
+        mls_id: {type: string}
+  expected:
+    fields:
+      bedrooms: 3
+      bathrooms: 2
+      sqft: 1820
+      price: 649000
+      mls_id: "ML-998877"
+
+- id: ext-015
+  input:
+    text: "Server: prod-db-03, IP 10.0.5.21, OS Ubuntu 24.04, 32GB RAM, 8 vCPUs, uptime 142 days."
+    schema:
+      type: object
+      properties:
+        hostname: {type: string}
+        ip: {type: string}
+        os: {type: string}
+        ram_gb: {type: integer}
+        vcpus: {type: integer}
+        uptime_days: {type: integer}
+  expected:
+    fields:
+      hostname: "prod-db-03"
+      ip: "10.0.5.21"
+      os: "Ubuntu 24.04"
+      ram_gb: 32
+      vcpus: 8
+      uptime_days: 142
+
+- id: ext-016
+  input:
+    text: "Stock: AAPL closed at $234.56 on 2026-05-20, up $3.21 (+1.39%), volume 52.4M."
+    schema:
+      type: object
+      properties:
+        symbol: {type: string}
+        close: {type: number}
+        date: {type: string}
+        change: {type: number}
+        change_pct: {type: number}
+  expected:
+    fields:
+      symbol: "AAPL"
+      close: 234.56
+      date: "2026-05-20"
+      change: 3.21
+      change_pct: 1.39
+
+- id: ext-017
+  input:
+    text: "Concert: Taylor Swift Eras Tour, Tokyo Dome, 2026-06-10, doors at 18:00, show 19:30."
+    schema:
+      type: object
+      properties:
+        artist: {type: string}
+        tour: {type: string}
+        venue: {type: string}
+        date: {type: string}
+        doors: {type: string}
+        show: {type: string}
+  expected:
+    fields:
+      artist: "Taylor Swift"
+      tour: "Eras Tour"
+      venue: "Tokyo Dome"
+      date: "2026-06-10"
+      doors: "18:00"
+      show: "19:30"
+
+- id: ext-018
+  input:
+    text: "Shipment SHP-77821, FedEx tracking 7714 9923 0033, 4.2 kg, ships 2026-05-25 to London UK."
+    schema:
+      type: object
+      properties:
+        shipment_id: {type: string}
+        carrier: {type: string}
+        tracking: {type: string}
+        weight_kg: {type: number}
+        ship_date: {type: string}
+        destination: {type: string}
+  expected:
+    fields:
+      shipment_id: "SHP-77821"
+      carrier: "FedEx"
+      weight_kg: 4.2
+      ship_date: "2026-05-25"
+
+- id: ext-019
+  input:
+    text: "Marathon result: bib 4421, Maria Lopez, finish time 3:12:45, age group F30-34, place 2nd."
+    schema:
+      type: object
+      properties:
+        bib: {type: integer}
+        name: {type: string}
+        finish_time: {type: string}
+        age_group: {type: string}
+        place: {type: integer}
+  expected:
+    fields:
+      bib: 4421
+      name: "Maria Lopez"
+      finish_time: "3:12:45"
+      age_group: "F30-34"
+      place: 2
+
+- id: ext-020
+  input:
+    text: "Receipt: Coffee shop, 2 lattes ($5.50 each), 1 muffin ($3.75), tax $1.18, total $15.93."
+    schema:
+      type: object
+      properties:
+        item_count: {type: integer}
+        tax: {type: number}
+        total: {type: number}
+  expected:
+    fields:
+      tax: 1.18
+      total: 15.93

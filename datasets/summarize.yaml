@@ -1,0 +1,217 @@
+# Summarization eval cases. Each: input.text + expected.contains (must-mention facts) + judge_rubric.
+- id: sum-001
+  input:
+    text: |
+      In Q3 2025, Acme Corp reported revenue of $4.2 billion, up 18% year-over-year.
+      CEO Jane Doe attributed the growth to strong demand for the company's new
+      enterprise AI platform, which launched in June 2025.
+  expected:
+    contains: ["Acme", "$4.2 billion", "18%"]
+    judge_rubric: "Summary must mention Acme, the $4.2B revenue, and the 18% YoY growth. No invented facts."
+  tags: [finance, factual]
+
+- id: sum-002
+  input:
+    text: |
+      The James Webb Space Telescope detected the most distant galaxy ever observed,
+      JADES-GS-z14-0, formed just 290 million years after the Big Bang. The galaxy
+      is unusually bright, suggesting early universe star formation was more efficient
+      than models predicted.
+  expected:
+    contains: ["JADES-GS-z14-0", "290 million"]
+    judge_rubric: "Mentions the galaxy name and the 290M-year figure. Does not invent additional measurements."
+  tags: [science]
+
+- id: sum-003
+  input:
+    text: |
+      The European Central Bank held its main rate at 3.75% on Thursday, citing
+      persistent core inflation in the services sector. Markets had priced in a
+      25 basis point cut.
+  expected:
+    contains: ["3.75%", "European Central Bank"]
+    judge_rubric: "Mentions ECB and 3.75% rate hold. No fabricated speakers."
+  tags: [finance]
+
+- id: sum-004
+  input:
+    text: |
+      A magnitude 6.4 earthquake struck off the coast of northern Chile early Monday.
+      No tsunami warning was issued. Local authorities reported damage to several
+      buildings in the city of Iquique but no casualties as of the latest update.
+  expected:
+    contains: ["6.4", "Chile", "Iquique"]
+    judge_rubric: "Mentions magnitude, country, city. No invented casualties."
+  tags: [news]
+
+- id: sum-005
+  input:
+    text: |
+      Researchers at Stanford published a paper showing that fine-tuning a 7B
+      parameter language model on 12,000 curated math problems beat a 70B
+      model on the GSM8K benchmark, scoring 91.2% versus 86.4%.
+  expected:
+    contains: ["7B", "70B", "91.2%", "GSM8K"]
+    judge_rubric: "Captures both parameter counts, both scores, the benchmark name."
+  tags: [research, ml]
+
+- id: sum-006
+  input:
+    text: |
+      The city council voted 7-2 on Tuesday to approve a $50 million bond
+      measure for upgrading the wastewater treatment plant. Construction is
+      expected to begin in spring 2026.
+  expected:
+    contains: ["7-2", "$50 million", "wastewater"]
+    judge_rubric: "Includes vote tally, dollar amount, project."
+  tags: [civic]
+
+- id: sum-007
+  input:
+    text: |
+      Tesla recalled 1.2 million vehicles in China to fix a software issue
+      affecting the autopilot system. The recall is the largest in the company's
+      China history and will be performed via over-the-air update.
+  expected:
+    contains: ["Tesla", "1.2 million", "China", "over-the-air"]
+    judge_rubric: "Includes company, count, country, and OTA method."
+  tags: [tech, news]
+
+- id: sum-008
+  input:
+    text: |
+      The 2025 Nobel Prize in Physics was awarded to John Hopfield and Geoffrey
+      Hinton for foundational discoveries enabling machine learning with
+      artificial neural networks.
+  expected:
+    contains: ["Hopfield", "Hinton", "Nobel"]
+    judge_rubric: "Both names + the prize. Year optional."
+  tags: [science]
+
+- id: sum-009
+  input:
+    text: |
+      Apple's iPhone 17 ships with a redesigned A19 chip built on TSMC's 2nm
+      process, delivering a claimed 22% improvement in single-core performance
+      over the iPhone 16. Battery life increased by about 90 minutes.
+  expected:
+    contains: ["A19", "2nm", "22%"]
+    judge_rubric: "Chip name, process node, and performance figure required."
+  tags: [tech]
+
+- id: sum-010
+  input:
+    text: |
+      Brazil's central bank raised its Selic rate by 100 basis points to 13.25%,
+      its largest hike in two years, after inflation surprised to the upside in
+      November at 5.1%.
+  expected:
+    contains: ["Brazil", "Selic", "13.25%", "5.1%"]
+    judge_rubric: "Country, rate name, new level, inflation print."
+  tags: [finance]
+
+- id: sum-011
+  input:
+    text: |
+      A clinical trial of the experimental Alzheimer's drug LX-204 showed a
+      27% reduction in cognitive decline over 18 months among participants
+      with early-stage disease, according to results published in NEJM.
+  expected:
+    contains: ["LX-204", "27%", "18 months", "NEJM"]
+    judge_rubric: "Drug name, effect size, duration, journal."
+  tags: [medical]
+
+- id: sum-012
+  input:
+    text: |
+      OpenAI announced a partnership with Microsoft to build a new $80 billion
+      AI supercomputer named Stargate, scheduled to come online in 2028.
+  expected:
+    contains: ["OpenAI", "Microsoft", "$80 billion", "Stargate", "2028"]
+    judge_rubric: "Both parties, dollar amount, project name, year."
+  tags: [tech]
+
+- id: sum-013
+  input:
+    text: |
+      The Mariners beat the Yankees 6-3 in 11 innings on Wednesday at T-Mobile
+      Park. Cal Raleigh hit a walk-off three-run homer in the bottom of the 11th.
+  expected:
+    contains: ["Mariners", "Yankees", "6-3", "Raleigh"]
+    judge_rubric: "Teams, score, key player."
+  tags: [sports]
+
+- id: sum-014
+  input:
+    text: |
+      The new EU Digital Services Act compliance deadline is March 1, 2026.
+      Platforms with more than 45 million EU users must publish risk
+      assessments and submit to third-party audits annually.
+  expected:
+    contains: ["Digital Services Act", "March 1, 2026", "45 million"]
+    judge_rubric: "Regulation, deadline, threshold."
+  tags: [regulatory]
+
+- id: sum-015
+  input:
+    text: |
+      A wildfire in Sonoma County has burned 12,400 acres and is 35% contained
+      as of Friday evening. Roughly 4,500 residents are under evacuation orders.
+  expected:
+    contains: ["Sonoma", "12,400 acres", "35%", "4,500"]
+    judge_rubric: "Location, acreage, containment, evacuees."
+  tags: [news]
+
+- id: sum-016
+  input:
+    text: |
+      Spotify reported 678 million monthly active users in Q4 2025, up from
+      640 million in Q3, exceeding analyst estimates of 665 million.
+  expected:
+    contains: ["Spotify", "678 million", "640 million"]
+    judge_rubric: "Company, current MAU, prior MAU."
+  tags: [finance, tech]
+
+- id: sum-017
+  input:
+    text: |
+      Hurricane Lila made landfall in southern Florida as a Category 3 storm
+      with sustained winds of 125 mph. The National Weather Service warned of
+      storm surge up to 12 feet along the coast.
+  expected:
+    contains: ["Lila", "Florida", "Category 3", "125 mph", "12 feet"]
+    judge_rubric: "Name, location, category, wind speed, surge height."
+  tags: [news]
+
+- id: sum-018
+  input:
+    text: |
+      Argentina's national soccer team won the Copa America final 2-1 against
+      Brazil in extra time. Lionel Messi scored the winning goal in the 113th
+      minute at MetLife Stadium.
+  expected:
+    contains: ["Argentina", "Brazil", "2-1", "Messi", "113th"]
+    judge_rubric: "Teams, score, scorer, minute."
+  tags: [sports]
+
+- id: sum-019
+  input:
+    text: |
+      The Federal Trade Commission filed an antitrust lawsuit against PharmaCo
+      Holdings, alleging the company illegally maintained a monopoly on insulin
+      pricing by paying generic competitors to delay market entry.
+  expected:
+    contains: ["FTC", "PharmaCo", "insulin", "antitrust"]
+    judge_rubric: "Agency, defendant, product, type of action."
+  tags: [legal]
+
+- id: sum-020
+  input:
+    text: |
+      SpaceX successfully landed all three Starship boosters on its first
+      operational lunar cargo mission, delivering 18 tons of supplies to
+      Shackleton Base near the Moon's south pole.
+  expected:
+    contains: ["SpaceX", "Starship", "18 tons", "Shackleton"]
+    judge_rubric: "Company, vehicle, payload mass, destination."
+  tags: [space]

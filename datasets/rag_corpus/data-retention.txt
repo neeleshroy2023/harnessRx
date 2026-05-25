@@ -1,0 +1,13 @@
+Data Retention and Deletion
+
+Customer data is retained for the duration of the active subscription plus a
+30-day grace period after cancellation. After the grace period, all customer
+data is permanently deleted from primary storage within 7 days and from backups
+within 90 days.
+
+Audit logs are retained for 12 months on the Business plan and 24 months on the
+Enterprise plan. Audit logs are immutable and cannot be deleted by customers.
+
+Customers may request immediate data deletion (right-to-be-forgotten) by emailing
+privacy@acme.cloud. Such requests are completed within 30 days of receipt and a
+written confirmation is sent.

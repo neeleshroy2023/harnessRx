@@ -1,0 +1,16 @@
+Single Sign-On (SSO) Setup
+
+Acme Cloud supports SAML 2.0 and OIDC for SSO. SSO is included on the Business
+plan ($49/user/month) and the Enterprise plan. The Starter plan does not include SSO.
+
+To configure SAML SSO:
+1. In your IdP (Okta, Azure AD, Google Workspace), create a new SAML application.
+2. Set the ACS URL to https://app.acme.cloud/sso/saml/acs.
+3. Set the Entity ID to acme-cloud.
+4. Upload the IdP metadata XML in Settings > Security > SSO.
+5. Map the email attribute to NameID.
+
+SCIM provisioning is available on Enterprise only and is configured separately
+under Settings > Security > SCIM.
+
+Support response time for SSO issues is 4 business hours on Business, 1 hour on Enterprise.

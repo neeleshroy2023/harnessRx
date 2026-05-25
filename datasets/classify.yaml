@@ -1,0 +1,81 @@
+# Classification cases. Labels: billing, technical_support, account, feedback, sales, other.
+- id: cls-001
+  input: {message: "Why was I charged twice this month? Please refund the duplicate."}
+  expected: {label: billing}
+  tags: []
+- id: cls-002
+  input: {message: "My laptop won't connect to the VPN since the latest update."}
+  expected: {label: technical_support}
+  tags: []
+- id: cls-003
+  input: {message: "I forgot my password and the reset link isn't arriving."}
+  expected: {label: account}
+  tags: []
+- id: cls-004
+  input: {message: "Just wanted to say your new dashboard is fantastic. Thank you!"}
+  expected: {label: feedback}
+  tags: []
+- id: cls-005
+  input: {message: "How much does the enterprise plan cost for 500 seats?"}
+  expected: {label: sales}
+  tags: []
+- id: cls-006
+  input: {message: "The invoice PDF won't download from the billing page."}
+  expected: {label: billing}
+  tags: [edge]
+- id: cls-007
+  input: {message: "Can I get a quote for adding SSO to my current plan?"}
+  expected: {label: sales}
+  tags: []
+- id: cls-008
+  input: {message: "Two-factor auth is locking me out even with the right code."}
+  expected: {label: account}
+  tags: []
+- id: cls-009
+  input: {message: "Getting a 500 error every time I try to upload a CSV."}
+  expected: {label: technical_support}
+  tags: []
+- id: cls-010
+  input: {message: "I'd love a feature to bulk-archive old projects."}
+  expected: {label: feedback}
+  tags: []
+- id: cls-011
+  input: {message: "The weather is nice today."}
+  expected: {label: other}
+  tags: [oos]
+- id: cls-012
+  input: {message: "Please cancel my subscription and stop all future charges."}
+  expected: {label: billing}
+  tags: []
+- id: cls-013
+  input: {message: "How do I change my email address on file?"}
+  expected: {label: account}
+  tags: []
+- id: cls-014
+  input: {message: "Do you offer educational discounts for students?"}
+  expected: {label: sales}
+  tags: []
+- id: cls-015
+  input: {message: "App crashes on iOS 18 when I open the export menu."}
+  expected: {label: technical_support}
+  tags: []
+- id: cls-016
+  input: {message: "The new onboarding flow is confusing for first-time users."}
+  expected: {label: feedback}
+  tags: []
+- id: cls-017
+  input: {message: "Delete my account permanently and remove all my data."}
+  expected: {label: account}
+  tags: []
+- id: cls-018
+  input: {message: "Why was I billed in EUR instead of USD this cycle?"}
+  expected: {label: billing}
+  tags: []
+- id: cls-019
+  input: {message: "We're evaluating tools for our team of 12. Got a demo?"}
+  expected: {label: sales}
+  tags: []
+- id: cls-020
+  input: {message: "Random question: who's your CEO?"}
+  expected: {label: other}
+  tags: [oos]

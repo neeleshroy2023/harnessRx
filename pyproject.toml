@@ -1,0 +1,34 @@
+[project]
+name = "harnessrx"
+version = "0.1.0"
+description = "Eval + guardrails harness for production Claude LLM features"
+requires-python = ">=3.11"
+dependencies = [
+    "anthropic>=0.40.0",
+    "fastapi>=0.115.0",
+    "uvicorn[standard]>=0.30.0",
+    "pyyaml>=6.0.2",
+    "jsonschema>=4.23.0",
+    "rouge-score>=0.1.2",
+    "pydantic>=2.9.0",
+    "python-dotenv>=1.0.1",
+    "httpx>=0.27.0",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=8.0.0",
+    "pytest-asyncio>=0.24.0",
+    "ruff>=0.6.0",
+]
+
+[tool.uv]
+package = false
+
+[tool.pytest.ini_options]
+asyncio_mode = "auto"
+pythonpath = ["backend"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py311"

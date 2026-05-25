@@ -1,0 +1,11 @@
+Acme Cloud Refund Policy
+
+Customers may request a full refund within 14 days of the initial purchase for
+any reason. After 14 days, refunds are prorated based on unused service time
+for annual plans only; monthly plans are non-refundable after the 14-day window.
+
+Refunds for enterprise contracts (>$10,000 annual value) require written
+approval from a Customer Success Manager and are processed within 30 business days.
+
+Refunds are returned to the original payment method. Bank wire refunds are not
+supported for transactions originally paid via credit card.
